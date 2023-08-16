@@ -1,0 +1,234 @@
+{{ header }} {{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-cod" data-toggle="tooltip" title="{{ button_save }}"
+                        class="btn btn-primary">
+                    <i class="fa fa-save"></i>
+                </button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default">
+                    <i class="fa fa-reply"></i>
+                </a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href=" {{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if (error_warning) %}
+            <div class="alert alert-danger">
+                <i class="fa fa-exclamation-circle"></i>{{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-freedompay"
+                      class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_payment_name">
+                            <span data-toggle="tooltip"
+                                  title="{{ tooltip_payment_name }}"> {{ entry_payment_name }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_freedompay_payment_name"
+                                   value="{{ payment_freedompay_payment_name }}"
+                                   placeholder="{{ payment_freedompay_payment_name }}"
+                                   id="payment_freedompay_payment_name"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_merchant_id">
+                            <span data-toggle="tooltip" title="{{ tooltip_merchant_id }}">{{ entry_merchant_id }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_freedompay_merchant_id"
+                                   value="{{ payment_freedompay_merchant_id }}"
+                                   placeholder="{{ payment_freedompay_merchant_id }}"
+                                   id="payment_freedompay_merchant_id"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_secret_word">
+                            <span data-toggle="tooltip" title="{{ tooltip_secret_word }}">{{ entry_secret_word }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_freedompay_secret_word"
+                                   value="{{ payment_freedompay_secret_word }}"
+                                   placeholder="{{ payment_freedompay_secret_word }}"
+                                   id="payment_freedompay_secret_word"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_api_url">
+                            <span data-toggle="tooltip"
+                                  title="{{ tooltip_api_url }}">{{ entry_api_url }}</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <select name="payment_freedompay_api_url" class="form-control"
+                                    id="payment_freedompay_api_url">
+                                {% for api_url in api_url_list %}
+                                    <option value="{{ api_url }}" {{ (api_url == payment_freedompay_api_url) ? 'selected' : '' }}> {{ api_url }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="copy_result_url">
+                            <span data-toggle="tooltip" title="{{ tooltip_result_url }}">{{ entry_result_url }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="copy_result_url" value="{{ copy_result_url }}"
+                                   placeholder="{{ copy_result_url }}" id="copy_result_url" class="form-control"
+                                   disabled/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="copy_success_url">
+                            <span data-toggle="tooltip" title="{{ tooltip_success_url }}">{{ entry_success_url }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="copy_success_url" value="{{ copy_success_url }}"
+                                   placeholder="{{ copy_success_url }}" id="copy_success_url" class="form-control"
+                                   disabled/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="copy_fail_url">
+                            <span data-toggle="tooltip" title="{{ tooltip_fail_url }}">{{ entry_fail_url }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="copy_fail_url" value="{{ copy_fail_url }}"
+                                   placeholder="{{ copy_fail_url }}" id="copy_fail_url" class="form-control" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_test">
+                            <span data-toggle="tooltip" title="{{ tooltip_test }}">{{ entry_test }}</span>
+                        </label>
+                        <div class="col-sm-1">
+                            <select name="payment_freedompay_test" class="form-control" id="payment_freedompay_test">
+                                <option value="1" {{ (payment_freedompay_test == 1) ? 'selected' : '' }}> {{ text_enabled }}</option>
+                                <option value="0" {{ (payment_freedompay_test == 0) ? 'selected' : '' }}> {{ text_disabled }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_lifetime">
+                            <span data-toggle="tooltip" title="{{ tooltip_lifetime }}">{{ entry_lifetime }}</span>
+                        </label>
+                        <div class="col-sm-1">
+                            <input type="number" min="1" step="1" name="payment_freedompay_lifetime"
+                                   value="{{ payment_freedompay_lifetime }}"
+                                   placeholder="{{ payment_freedompay_lifetime }}"
+                                   id="payment_freedompay_lifetime" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_order_status_id">
+                            <span data-toggle="tooltip"
+                                  title="{{ tooltip_order_status }}">{{ entry_order_status }}</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <select name="payment_freedompay_order_status_id" class="form-control"
+                                    id="payment_freedompay_order_status_id">
+                                {% for order_status in order_statuses %}
+                                    <option value="{{ order_status['order_status_id'] }}" {{ (order_status['order_status_id'] == payment_freedompay_order_status_id) ? 'selected' : '' }}> {{ order_status['name'] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_status">
+                            <span data-toggle="tooltip" title="{{ tooltip_status }}">{{ entry_status }}</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <select name="payment_freedompay_status" id="payment_freedompay_status"
+                                    class="form-control">
+                                <option value="1" {{ (payment_freedompay_status == 1) ? 'selected' : '' }}>{{ text_enabled }}</option>
+                                <option value="0" {{ (payment_freedompay_status == 0) ? 'selected' : '' }}>{{ text_disabled }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_ofd">
+                            <span data-toggle="tooltip" title="{{ tooltip_ofd }}">{{ entry_ofd }}</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <select name="payment_freedompay_ofd" id="payment_freedompay_ofd" class="form-control">
+                                <option value="1" {{ (payment_freedompay_ofd == 1) ? 'selected' : '' }}>{{ text_enabled }}</option>
+                                <option value="0" {{ (payment_freedompay_ofd == 0) ? 'selected' : '' }}>{{ text_disabled }}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2 control-label" for="payment_freedompay_ofd_tax_type">
+                            <span data-toggle="tooltip"
+                                  title="{{ tooltip_ofd_tax_type }}">{{ entity_ofd_tax_type }}</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <select name="payment_freedompay_ofd_tax_type" id="payment_freedompay_ofd_tax_type"
+                                    class="form-control" {{ (payment_freedompay_ofd == 1) ? '' : 'disabled' }}>
+                                <option value="0" {{ (payment_freedompay_ofd_tax_type == 0)  ? 'selected' : '' }}>{{ tax_type_vat_none }}</option>
+                                <option value="1" {{ (payment_freedompay_ofd_tax_type == 1)  ? 'selected' : '' }}>{{ tax_type_vat_0 }}</option>
+                                <option value="2" {{ (payment_freedompay_ofd_tax_type == 2)  ? 'selected' : '' }}>{{ tax_type_vat_12 }}</option>
+                                <option value="3" {{ (payment_freedompay_ofd_tax_type == 3)  ? 'selected' : '' }}>{{ tax_type_vat_112 }}</option>
+                                <option value="4" {{ (payment_freedompay_ofd_tax_type == 4)  ? 'selected' : '' }}>{{ tax_type_vat_18 }}</option>
+                                <option value="5" {{ (payment_freedompay_ofd_tax_type == 5)  ? 'selected' : '' }}>{{ tax_type_vat_118 }}</option>
+                                <option value="6" {{ (payment_freedompay_ofd_tax_type == 6)  ? 'selected' : '' }}>{{ tax_type_vat_10 }}</option>
+                                <option value="7" {{ (payment_freedompay_ofd_tax_type == 7)  ? 'selected' : '' }}>{{ tax_type_vat_110 }}</option>
+                                <option value="8" {{ (payment_freedompay_ofd_tax_type == 8)  ? 'selected' : '' }}>{{ tax_type_vat_20 }}</option>
+                                <option value="9" {{ (payment_freedompay_ofd_tax_type == 9)  ? 'selected' : '' }}>{{ tax_type_vat_120 }}</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="payment_freedompay_ofd_shipping">
+                            <span data-toggle="tooltip"
+                                  title="{{ tooltip_ofd_shipping }}">{{ entity_ofd_shipping }}</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <select name="payment_freedompay_ofd_shipping" id="payment_freedompay_ofd_shipping"
+                                    class="form-control" {{ (payment_freedompay_ofd == 1) ? '' : 'disabled' }}>
+                                <option value="1" {{ (payment_freedompay_ofd_shipping == 1) ? 'selected' : '' }}>{{ text_enabled }}</option>
+                                <option value="0" {{ (payment_freedompay_ofd_shipping == 0) ? 'selected' : '' }}>{{ text_disabled }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="payment_freedompay_sort_order">
+                            <span data-toggle="tooltip" title="{{ tooltip_sort_order }}">{{ entry_sort_order }}</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="number" name="payment_freedompay_sort_order"
+                                   id="payment_freedompay_sort_order"
+                                   value="{{ payment_freedompay_sort_order }}" size="1" class="form-control"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ footer }}
